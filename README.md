@@ -4,12 +4,14 @@ Vzorčni repozitorij za projekt pri predmetu APPR v študijskem letu 2021/22.
 
 ## Tematika
 
-Tema moje projektne naloge se imenuje poraba električne energije za različne porabnike skozi leto.
-To temo sem si izbral, ker na Razvojnem centru Novo mesto, kjer občasno delam, potrebujejo nekoga, da naredi ta projekt. Tema me tudi drugače zanima in tako bom naredil projektno nalogo in zraven se malo zasluzil:)
-V sklopu te naloge bom opazoval porabo električne energije za različne električne porabnike za 200 zaporednih dni v letu 2021.  Podatke za porabo električne energije in vreme bom dobil iz programskega vmesnika JSON, medtem ko bom dobil koledarske podatke iz CSV formata.
-Imel bi 50 tabel porabe električne energije, za vsak porabnik eno tabelo po dnevih. Potem pa bom imel še tabelo z vremenom, kjer bodo stolpci predstavljali vremenske dejavnike(vlaga, tlak, veter...). 
-Nato bi te podatke grupiral po "tipih dneva", primerjal bi razlike porabe električne energije za navadne deovne dneve, nedelje, praznike, za različne letne čase, različna vremena...
-Cilj te naloge bo bil napovedati porabo električne energije za prihodnji dan.
+Tema moje projektne naloge se imenuje analiza pretekle porabe in napoved bodoče porabe električne energije za različne porabnike skozi leto na 15 minutni bazi.
+To temo sem si izbral, ker na Razvojnem centru Novo mesto, kjer občasno delam, delajo na tem projektu in mi lahko posredujejo realne podatke, hkrati pa bi za njih mogoče bili moji rezultati uporabni. 
+Tema me zanima. V sklopu te naloge bom opazoval porabo električne energije za 50 različnih porabnikov električne porabnike za 200 zaporednih dni v letu 2021.  Podatke o pretekli porabi električne energije in za vreme v krajih, od koder so porabniki, bom dobil od Razvojnega centra Novo mesto v obliki json formata.
+Pridobil sem pa tudi podatke o koledarju za celotno desetletje, ki so v obliki csv. 
+Imel bi 50 tabel porabe električne energije, za vsak porabnik eno tabelo po dnevih. Potem pa bom imel še tabelo z vremenom, kjer bodo stolpci predstavljali vremenske dejavnike (vlaga, tlak, veter, temperatura, ...) za kraje, od koder so ti porabniki. 
+Najprej bi za vsakega porabnika analiziral povprečno porabo ob različnih dnevih (delovni dnevi, vikendi, prazniki, različni meseci,...), nato pa bi izračunal skupno porabo vseh 50 porabnikov in nato naredil še razvrščanje v skupine, da bi videl tipične dnevne porabe (razvrščal bi teh 200 dni, za katere imam podatke).
+
+Na koncu pa bi s preprosto analizo časovnih vrst poskusil napovedati porabo v naslednjem dnevu. 
 
 
 ## Program
