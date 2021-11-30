@@ -8,10 +8,10 @@ Tema moje projektne naloge se imenuje analiza pretekle porabe in napoved bodoče
 To temo sem si izbral, ker na Razvojnem centru Novo mesto, kjer občasno delam, delajo na tem projektu in mi lahko posredujejo realne podatke, hkrati pa bi za njih mogoče bili moji rezultati uporabni. 
 Tema me zanima. V sklopu te naloge bom opazoval porabo električne energije za 50 različnih porabnikov električne energije za 200 zaporednih dni v letu 2021.  Podatke o pretekli porabi električne energije in za vreme v krajih, od koder so porabniki, sem dobil od Razvojnega centra Novo mesto v obliki json formata.
 Pridobil sem pa tudi podatke o koledarju za celotno desetletje, ki so v obliki csv. 
-Imel bi 50 tabel porabe električne energije, za vsak porabnik eno tabelo po dnevih. Potem pa bom imel še tabelo z vremenom, kjer bodo stolpci predstavljali vremenske dejavnike (vlaga, tlak, veter, temperatura, ...) za kraje, od koder so ti porabniki. 
+Imel bom 50 tabel porabe električne energije, za vsak porabnik eno tabelo po dnevih. Potem pa bom imel še tabelo z vremenom, kjer bodo stolpci predstavljali vremenske dejavnike (vlaga, tlak, veter, temperatura, ...) za kraje, od koder so ti porabniki. 
 Najprej bi za vsakega porabnika analiziral povprečno porabo ob različnih dnevih (delovni dnevi, vikendi, prazniki, različni meseci,...), nato pa bi izračunal skupno porabo vseh 50 porabnikov in nato naredil še razvrščanje v skupine, da bi videl tipične dnevne porabe (razvrščal bi teh 200 dni, za katere imam podatke).
 
-Na koncu pa bi s preprosto analizo časovnih vrst poskusil napovedati porabo v naslednjem dnevu. 
+Na koncu pa bi s  analizo časovnih vrst poskusil napovedati porabo v naslednjem dnevu. 
 
 
 ## Program
