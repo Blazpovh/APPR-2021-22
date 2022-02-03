@@ -1,9 +1,10 @@
 # 2. faza: Uvoz podatkov
+setwd("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/")
 source("lib/libraries.r")
 N=199
 data_i_tidy<-data.frame(datum=character(N),porabnik=numeric(N),meritve=matrix(0,N,96))
 
-Ncust=5
+Ncust=51
 cnt=1
 for (i in c(1:Ncust)) {
   print(i)
@@ -31,3 +32,4 @@ data_i_tidy <- data_i_tidy %>%
   add_column(Prosti_dan =prosti_dnevi_1, Ime_dneva =dnevni_podatki_1)
 
 write.table(data_i_tidy,"podatki/zdruzeni_podatki/data_tidy.txt",sep=" ")
+
