@@ -15,7 +15,7 @@ for (i in 1:length(porabniki)){
 frekvenca <- c(1:51)
 data_povpr_poraba <- data.frame(povpr_poraba,frekvenca)
 
-pdf("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/analiza/prikaz_skupne_povprecne_porabe_za_razlicne_porabnike.pdf")
+jpeg("slike/prikaz_skupne_povprecne_porabe_za_razlicne_porabnike.jpg")
 chol <- data_povpr_poraba
 qplot(chol$povpr_poraba, 
       geom = "histogram",
@@ -25,7 +25,7 @@ qplot(chol$povpr_poraba,
       ylab = "Frekvenca",
       ylim = c(0,10))
 dev.off()
-jpeg("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/slike/prikaz_skupne_povprecne_porabe_za_razlicne_meritve.jpg")
+jpeg("slike/prikaz_skupne_povprecne_porabe_za_razlicne_meritve.jpg")
 Tabela_delovnih_dni <- filter(data_tidy, Prosti_dan == "FALSE")
 meritev3 <- colMeans(Tabela_delovnih_dni[ , 3:98 ],is.na(data_tidy)== FALSE)
 p3 <-plot(meritev3, type = "o",pch = 20, xlab="cas",ylab = "povprecna poraba",main = "Graf povprecne poraba el. energije za razlicne tipe dni",xaxt='n')
@@ -42,7 +42,7 @@ axis(side=1, at=c(12,24,36,48,60,72,84,96),labels=xlabels)
 legend(title = "Legenda", legend = c("vsi dnevi","prosti dnevi","delovni dnevi"),"topright",col = c("blue","red","green"),lty = 1)
 dev.off()
 
-pdf("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/analiza/prikaz_skupne_povprecne_porabe_za_proste_dni.pdf")
+jpeg("slike/prikaz_skupne_povprecne_porabe_za_proste_dni.jpg")
 Tabela_prostih_dni <- filter(data_tidy, Prosti_dan == "TRUE")
 meritev2 <- colMeans(Tabela_prostih_dni[ , 3:98 ],is.na(data_tidy)== FALSE)
 p2 <-plot(meritev2, type = "o",pch = 20, xlab="cas",ylab = "povprecna poraba",main = "Graf povprecne poraba el. energije za proste dni",xaxt='n')
@@ -50,7 +50,7 @@ xlabels=c("3h","6h","9h","12h","15h","18h","21h","24h")
 axis(side=1, at=c(12,24,36,48,60,72,84,96),labels=xlabels)
 dev.off()
 
-pdf("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/analiza/prikaz_skupne_povprecne_porabe_za_delovne_dni.pdf")
+jpeg("slike/prikaz_skupne_povprecne_porabe_za_delovne_dni.jpg")
 Tabela_delovnih_dni <- filter(data_tidy, Prosti_dan == "FALSE")
 meritev3 <- colMeans(Tabela_delovnih_dni[ , 3:98 ],is.na(data_tidy)== FALSE)
 p3 <-plot(meritev3, type = "o",pch = 20, xlab="cas",ylab = "povprecna poraba",main = "Graf povprecne poraba el. energije za delavne dni",xaxt='n')
@@ -58,7 +58,7 @@ xlabels=c("3h","6h","9h","12h","15h","18h","21h","24h")
 axis(side=1, at=c(12,24,36,48,60,72,84,96),labels=xlabels)
 dev.off()
 
-jpeg("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/slike/prikaz_skupne_povprecne_porabe_za_razlicne_dneve.jpg")
+jpeg("slike/prikaz_skupne_povprecne_porabe_za_razlicne_dneve.jpg")
 par(mar=c(5,6,4,1)+.0001)
 plot(c(0,97),c(0.5,4),main="Povprecna poraba za dneve v tednu",type = "n",pch=20, xlab = "cas", ylab = "povprecna poraba",xaxt='n')
 povpr_poraba_ponedeljek <- colMeans(filter(data_tidy, Ime_dneva =="Monday")[ ,3:98])
@@ -159,7 +159,7 @@ slika_aproksimacije <-plot(c, type = "o",pch = 20,col="black")
 #aproksimacija <- points(c_napovedan1,type = "o",pch = 20, ,col="blue")
 #aproksimacija1 <- points(c_napovedan2,type = "o",pch = 20, ,col="red")
 zgornja_meja <- max(max(c_napovedan3),max(c))
-jpeg("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/slike/prikaz_skupne_natancnosti_napovednega_modela.jpg")
+jpeg("slike/prikaz_skupne_natancnosti_napovednega_modela.jpg")
 default <- c(5,2,4,2) + 0.1
 par(mar = mar.default + c(0, 4, 0, 0),family="serif") #axis(side, at=, labels=, pos=, lty=, col=, las=, tck=, ...)
 title="Povprecna poraba in njena napoved"
@@ -193,7 +193,7 @@ Tabela_razred3 <- povpr_poraba_matrika1[povpr_poraba_matrika1[,199] == "3",1:198
 Tabela_razred4 <- povpr_poraba_matrika1[povpr_poraba_matrika1[,199] == "4",1:198]
 Tabela_razred5 <- povpr_poraba_matrika1[povpr_poraba_matrika1[,199] == "5",1:198]
 
-jpeg("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/slike/prikaz_povprecne_porabe_za_razlicne_razrede.jpg")
+jpeg("slike/prikaz_povprecne_porabe_za_razlicne_razrede.jpg")
 mar.default <- c(5,2,4,2) + 0.1
 par(mar = mar.default + c(0, 4, 0, 0),family="serif") #axis(side, at=, labels=, pos=, lty=, col=, las=, tck=, ...)
 title="Povprecna poraba za razlicne razrede porabnikov"
