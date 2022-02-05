@@ -24,5 +24,6 @@ library(tmap)
 library(sp)
 library(GADMTools)
 library(grDevices)
+library(plotly)
 # Uvozimo funkcije za pobiranje in uvoz zemljevida.
 #source("lib/uvozi.zemljevid.r", encoding="UTF-8")
