@@ -70,7 +70,7 @@ Naslednja tabela prikazuje vzorec urejenih podatkov
 
 
 ```{r}
-data_tidy<-read.table("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/podatki/zdruzeni_podatki/data_tidy.txt",sep=" ")
+data_tidy<-read.table("podatki/zdruzeni_podatki/data_tidy.txt",sep=" ")
 data_tidy[1:5,1:8]
 ```
 
