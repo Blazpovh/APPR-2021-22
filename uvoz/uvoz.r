@@ -1,6 +1,5 @@
 # 2. faza: Uvoz podatkov
-setwd("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/")
-source("lib/libraries.r")
+#setwd("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/")
 N=199
 data_i_tidy<-data.frame(datum=character(N),porabnik=numeric(N),meritve=matrix(0,N,96))
 
@@ -10,28 +9,35 @@ for (i in c(1:Ncust)) {
   print(i)
   data_i <- fromJSON(file=paste0("podatki/consumptions/consumptions_consumer_",i,"_2021-01-01_2021-12-31.json"),method = "R")
   for (j in c(1:length(data_i))) {
-    if (data_i[[j]]$date != "2021-03-28"){
-      data_i_tidy[cnt, 3:98]=data_i[[j]]$values
+      x = data_i[[j]]$values
+      if (length(x) < 96){
+        x = as.numeric(c(x[1:8], rep("NA",96 - length(x)), x[9:length(x)]))
+        x = na.approx(x, rule=2)
+      }
+      data_i_tidy[cnt, 3:98]=x
       data_i_tidy$datum[cnt]=data_i[[j]]$date 
       data_i_tidy$porabnik[cnt]=i
       cnt=cnt + 1
-    }
   }
 }
-
+write.table(data_i_tidy,"podatki/zdruzeni_podatki/data_tidy1.csv",sep=" ")
 
 koledar_data <- read_csv("podatki/calendar_2021.csv", na =" ", locale=locale(encoding="Windows-1250"))
 koledar_data_1 <- select(koledar_data, -c(dayHours,dayNum,index))
 koledar_data_1 <-koledar_data[-c(87),]
 print(koledar_data_1)
 dnevni_podatki <- koledar_data_1$dayName
-dnevni_podatki_1 <- rep(dnevni_podatki, times=Ncust)
+Ime_dneva <- rep(dnevni_podatki, times=Ncust)
+datum <- as.character(koledar_data_1$date)
+datumi <- as.character(rep(datumi, times=Ncust))
 prosti_dnevi <- koledar_data_1$freeDay
-prosti_dnevi_1 <- rep(prosti_dnevi, times=Ncust)
-data_i_tidy <- data_i_tidy %>%
-  add_column(Prosti_dan =prosti_dnevi_1, Ime_dneva =dnevni_podatki_1)
-
-write.table(data_i_tidy,"podatki/zdruzeni_podatki/data_tidy.txt",sep=" ")
+prosti_dan <- rep(prosti_dnevi, times=Ncust)
+imena_dni_tabela <- data_frame(datum, dnevni_podatki, prosti_dnevi)
+Tabela_porabe <- read.csv("~/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/podatki/zdruzeni_podatki/data_tidy1.csv", sep="")
+Tabela_porabe1 <- left_join(Tabela_porabe, imena_dni_tabela, by='datum')
+colnames(Tabela_porabe1)[99]<- "Ime_dneva"
+colnames(Tabela_porabe1)[100]<- "Prosti_dan"
+write.table(Tabela_porabe1,"podatki/zdruzeni_podatki/Tabela_porabe.csv",sep=" ")
 
 # ***********************************************************************
 # Uvoz vremenskih podatkov
@@ -44,7 +50,6 @@ for (w in c(1:Ncust1)) {
   print(w)
   data_w <- fromJSON(file=paste0("podatki/weather/weather_",w,"_2021-01-01_2021-12-31.json"),method = "R")
   for (l in c(1:(length(data_w)-1))) {
-    if (data_w[[l]]$date != "2021-03-28"){
       dolzina_padavine <- length(data_w[[l]]$precipitation)
       dolzina_temperatura <- length(data_w[[l]]$temperature)
       if(dolzina_padavine > 0){
@@ -58,7 +63,6 @@ for (w in c(1:Ncust1)) {
       }
       cunt=cunt + 1
     }
-  }
 }
 data_vreme1_tidy <- data_vreme_tidy[!duplicated(data_vreme_tidy[c(1,2)]),] 
 data_vreme2_tidy <- data_vreme1_tidy[-198, ]

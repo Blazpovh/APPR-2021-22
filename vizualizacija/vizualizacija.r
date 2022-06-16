@@ -2,7 +2,7 @@
 # **************************************************
 # Zemljevid
 # **************************************************
-source("lib/libraries.r")
+#source("lib/libraries.r")
 slo.regije.shp = readOGR("podatki/SVN_adm_shp/SVN_adm1.shp") # preberemo podatke o zemljevidu
 slo.regije.map = slo.regije.shp %>% spTransform(CRS("+proj=longlat +datum=WGS84")) # pretvorimo v ustrezen format
 Imena_regij <- c(slo.regije.shp$NAME_1)

@@ -1,5 +1,5 @@
-setwd("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/")
-source("lib/libraries.r")
+#setwd("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/")
+#source("lib/libraries.r")
 N=199*51
 data_vreme_tidy <- data.frame(datum=character(N),kraj = character(N),porabnik=numeric(N),padavine=matrix(0,N,48),temperatura=matrix(0,N,48))
 Ncust1=50
