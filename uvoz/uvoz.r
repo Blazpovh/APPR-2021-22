@@ -1,5 +1,4 @@
 # 2. faza: Uvoz podatkov
-#setwd("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/")
 N=199
 data_i_tidy<-data.frame(datum=character(N),porabnik=numeric(N),meritve=matrix(0,N,96))
 
@@ -34,7 +33,7 @@ datumi <- as.character(rep(datumi, times=Ncust))
 prosti_dnevi <- koledar_data_1$freeDay
 Prosti_dan <- rep(prosti_dnevi, times=Ncust)
 imena_dni_tabela <- data_frame(datum, dnevni_podatki, prosti_dnevi)
-Tabela_porabe <- read.csv("~/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/podatki/zdruzeni_podatki/data_tidy1.csv", sep="")
+Tabela_porabe <- read.csv("podatki/zdruzeni_podatki/data_tidy1.csv", sep="")
 Tabela_porabe1 <- left_join(Tabela_porabe, imena_dni_tabela, by='datum')
 colnames(Tabela_porabe1)[99]<- "Ime_dneva"
 colnames(Tabela_porabe1)[100]<- "Prosti_dan"
