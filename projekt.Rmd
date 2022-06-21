@@ -15,7 +15,6 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
 
 ## Uvoz vseh potrebnih knjižnic
 source("lib/libraries.r",encoding="UTF-8")
-setwd("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/")
 ```
 
 ## Motivacija
@@ -67,9 +66,11 @@ Naslednja tabela prikazuje vzorec urejenih podatkov
 
 
 ```{r}
-Tabela_porabe1 <- read.csv("~/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/podatki/zdruzeni_podatki/data_tidy2.csv", sep="")
-Tabela_porabe1[1:5,1:8]
+Tabela_tidy <- read.csv("./podatki/zdruzeni_podatki/Tabela_tidy.csv", sep="")
+Tabela_tidy[1:5,1:6]
 ```
+Ta izsek je iz tabele v formatu tidy data. Nadaljne analize/razvrščanja pa sem črpal iz tabele, ki ni v tem formatu, saj se mi je zdelo to enostavnejše
+
 
 ## Analiza in vizualizacije
 
@@ -81,7 +82,8 @@ Narisal sem tri grafe, enega za povprečno porabo vseh 199 dni za vsak 15 minutn
 
 Združen graf pa izgleda takole: 
 
-![Slika 1:](./slike/prikaz_skupne_povprecne_porabe_za_razlicne_meritve.png)
+![Slika 1: Prikaz povprečne porabe za delovne, dela proste dni ter za vse dni](./slike/prikaz_skupne_povprecne_porabe_za_razlicne_meritve.png)
+
 
 Iz grafa lahko razberemo številne (pričakovane) zaključke. Največji porabniki električne energije so pri nas zagotovo tovarne in podjetja, kjer je potrebno veliko elektrike, da vse normalno deluje. Zato je bilo pričakovati, da bo povprečna poraba mnogo višja za delovne dni kot za dela proste. Ta pričakovanja so se potrdila, saj se vidi občutna razlika na grafu. Ker pa je mnogo več delovnih dni kot dela prostih je tudi zato povprečna poraba za vseh 199 dosti podobnejša povprečni porabi za delovne dni. Iz grafa pa je moč tudi razbrati za katere ure v dnevu je poraba največja. Iz grafa se lepo vidi, da je to nekje med 6. in 18. uro, ko je večina ljudi v službi, vrh pa se doseže približno ob 13h.
 
@@ -90,7 +92,8 @@ V nadaljevanju sem hotel potrditi prejšnjo ugotovitev, da je ob vikendih poraba
 
 Porabo za vsak dan posebej sem grafično prikazal ter nato združil vseh sedem grafov v enega za lažjo primerjavo.
 
-![Slika 2:](./slike/prikaz_skupne_povprecne_porabe_za_razlicne_dneve.jpg)
+![Slika 2: Prikaz povprečne porabe za različne dni v tednu](./slike/prikaz_skupne_povprecne_porabe_za_razlicne_dneve.jpg)
+
 
 Tudi tukaj ne morem reči, da sem prišel do kakšnih drastičnih novih spoznanj. Kot predvideno je poraba najvišja za dneve od ponedeljka do petka, ko ljudje hodijo v službe ter podjetja , še posebej proizvodna, obratujejo. V soboto je poraba bistveno manjša kot za prvih 5 dni v tednu, a je vseeno nekoliko višja kot v nedeljo. To si razlagam tako, da veliko uspešnih podjetij dela tudi ob sobotah. Hkrati pa so sobote dnevi, ko se še doma nekaj postori. Vsa ta opravila, ki se v nedeljo ponavadi ne delajo porabijo kar nekaj elektrike, kar je tudi po mojem mnenju razlog, zakaj je v soboto vidno višja poraba električne energije kot pa v nedeljo.
 
@@ -105,7 +108,7 @@ S pomočjo teh korelacij sem ugotovil, da imajo temperature  večji vpliv na por
 
 Največ časa in potrpljenja pa so mi vzele prostorske predstavitve podatkov. S pomočjo slednjih sem prikazal povprečne letne temperature za vse slovenske statistične regije. Iz [**gadm**](https://gadm.org) sem pridobil geografske podatke za statistične regije v Sloveniji. Nato sem iz [**ARSO**](https://www.arso.gov.si) pridobil podatke za povprečne letne temperature za regije in slednje po nekaj urah spravil na zemljevid in ga obarval po višini letne povprečne temperature.
 
-![Slika 3:](./slike/slo_povpr_temp.jpg)
+![Slika 3: Prikaz povprečne letne temperature za slovenske regije](./slike/slo_povpr_temp.jpg)
 
 Zemljevid prikazuje povprečne letne temperature za vse statistične regije v Sloveniji. Vidimo, da bolj, ko je regija svetleje obarvana višja je letna povprečna temperatura v tisti regiji. Tako vidimo, da so v osrednji Sloveniji ter na primorskem temperature najvišje, medtem ko so  najnižje temperature v zasavski regiji. Žal zemljevid nima velike povezave z osrednjimi podatki, to so porabe električne energije, vendar slednje ne bi bilo mogoče prikazati z zemljevidom, zato sem se odločil za prikaz temperatur, ki pa imajo nek mali vpliv na porabo električne energije, kar je razvidno iz korelacij.
 
@@ -115,12 +118,12 @@ To sem razbral iz diagramov, ki pripadata vsaki metodi. Diagrama lahko vidite sp
 
 
 
-![Slika 4:](./slike/hirarhicni_model.jpg)
+![Slika 4: Prikaz optimalnega števila skupin z metodo hierarhičnega razvrščanja](./slike/hirarhicni_model.jpg)
 
 
 Slika 4 prikazuje diagram, ki ga dobimo s pomočjo hierarhičnega razvrščanja.
 
-![Slika 5:](./slike/model_k_tih_voditeljev.jpg)
+![Slika 5: Prikaz optimalnega števila skupin z metodo k-tih voditeljev](./slike/model_k_tih_voditeljev.jpg)
 
 
 Slika 5 pa prikazuje diagram, ki ga dobimo s pomočjo metode k-tih voditeljev. Kot vidimo, dobimo obakrat enak rezultat.
@@ -128,14 +131,16 @@ Slika 5 pa prikazuje diagram, ki ga dobimo s pomočjo metode k-tih voditeljev. K
 
 Potem, ko sem ugotovil optimalno število skupin, sem se pa lotil risanja grafov za vsako skupino posebej in ju združil v eno sliko, da je razlika med porabama skupin opaznejša.
 
-![Slika 6:](./slike/prikaz_povprecne_porabe_za_razlicne_razrede.jpg)
+![Slika 6: Povprečna poraba za različne razrede porabnikov](./slike/prikaz_povprecne_porabe_za_razlicne_razrede.jpg)
 
 Graf prikazuje povprečno porabo za obe skupini porabnikov, kjer so z rdečo barvo predstavljeni porabniki, ki pripadajo skupini 2, črno obarvani pa pripadajo skupini 1.
 
 ## Napovedni model
 Po tem, ko sem napravil vse analize, sem se odločil sestaviti še napovedni model, ki bi napovedal bodočo porabo električne energije iz začetnega vzorca. Tu sem imel malce problema z izbiro modela, saj se moji podatki navezujejo na časovne vrste, slednjim pa na predavanjih nismo namenili veliko pozornosti, tako da sem iskal alternative. S strani [**pluralsight**](https://www.pluralsight.com/guides/time-series-forecasting-using-r) sem našel par modelov za moj napovedni model s časovnimi vrstami. Uporabil sem 4 modele, in po oceni napak ugotovil, da se mojim podatkom najbolj prilega arima model. Vse napovedi sem združil v en graf z dejansko porabo, da je moč primerjati odtsopanja med dejansko porabo in napovedano. Napoved, ki jo dobimo z arima modelom, je prikazana z modro barvo. 
 
-![Slika 7:](./slike/prikaz_natancnosti_razlicnih_napovednih_modelov.jpg)
+![Slika 7: Prikaz natančnosti različnih napovednih modelov](./slike/prikaz_natancnosti_razlicnih_napovednih_modelov.jpg)
+
+
 
 Kot lahko vidimo iz grafa se napovedi kar solidno prilegajo pravim podatkom, še boljše pa bi verjetno  bilo, če bi iz originalnih podatkov najprej izluščil ven osamelce.
 

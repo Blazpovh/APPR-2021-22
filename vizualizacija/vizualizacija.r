@@ -2,7 +2,6 @@
 # **************************************************
 # Zemljevid
 # **************************************************
-#source("lib/libraries.r")
 slo.regije.shp = readOGR("podatki/SVN_adm_shp/SVN_adm1.shp") # preberemo podatke o zemljevidu
 slo.regije.map = slo.regije.shp %>% spTransform(CRS("+proj=longlat +datum=WGS84")) # pretvorimo v ustrezen format
 Imena_regij <- c(slo.regije.shp$NAME_1)
@@ -16,7 +15,7 @@ slo.regije.poligoni1<-slo.regije.poligoni %>%
 
 slo.regije.poligoni_kratek= slo.regije.poligoni1[,c("NAME_1", "long", "lat", "order", "hole", "piece", "id", "group")]
 
-temperature_po_krajih <- read.csv("podatki/povprecne_temperature.csv",sep = ";")
+temperature_po_krajih <- read.csv("./podatki/povprecne_temperature.csv",sep = ";")
 Gorenjska <- mean(temperature_po_krajih[temperature_po_krajih[,3] == "Gorenjska regija",2])
 Goriška <- mean(temperature_po_krajih[temperature_po_krajih[,3] == "Goriska regija",2])
 Jugovzhodna_Slovenija <- mean(temperature_po_krajih[temperature_po_krajih[,3] == "JV SLO",2])
@@ -49,4 +48,6 @@ left_join(Tabela_regije,slo.regije.poligoni_kratek,
     axis.title = element_blank(),
   ) +
   guides(fill=guide_legend(title="Povprečna letna \ntemperatura"))
+
+
 

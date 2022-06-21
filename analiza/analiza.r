@@ -1,6 +1,5 @@
 # 4. faza: Napredna analiza podatkov
-setwd("/Users/blazpovh/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/")
-Tabela_porabe1 <- read.csv("~/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/podatki/zdruzeni_podatki/Tabela_porabe.csv", sep="")
+Tabela_porabe1 <- read.csv("./podatki/zdruzeni_podatki/Tabela_porabe.csv", sep="")
 
 dnevna_poraba <-rowSums(Tabela_porabe1[ ,3:98],is.na(Tabela_porabe1) == FALSE)
 length(dnevna_poraba)
@@ -15,17 +14,7 @@ for (i in 1:length(porabniki)){
 frekvenca <- c(1:51)
 data_povpr_poraba <- data.frame(povpr_poraba,frekvenca)
 
-jpeg("slike/prikaz_skupne_povprecne_porabe_za_razlicne_porabnike.jpg")
-chol <- data_povpr_poraba
-qplot(chol$povpr_poraba, 
-      geom = "histogram",
-      binwidth= 40,
-      main = "Povprečna poraba el. energije za različne porabnike",
-      xlab = "Povprečna poraba",
-      ylab = "Frekvenca",
-      ylim = c(0,10))
-dev.off()
-jpeg("slike/prikaz_skupne_povprecne_porabe_za_razlicne_meritve.jpg")
+jpeg("./slike/prikaz_skupne_povprecne_porabe_za_razlicne_meritve.jpg")
 Tabela_delovnih_dni <- filter(Tabela_porabe1, Prosti_dan == "FALSE")
 meritev3 <- colMeans(Tabela_delovnih_dni[ , 3:98 ],is.na(Tabela_porabe1)== FALSE)
 p3 <-plot(meritev3, type = "o",pch = 20, xlab="čas",ylab = "povprečna poraba",main = "Graf povprečne poraba el. energije za različne tipe dni",xaxt='n')
@@ -42,7 +31,7 @@ axis(side=1, at=c(12,24,36,48,60,72,84,96),labels=xlabels)
 legend(title = "Legenda", legend = c("vsi dnevi","prosti dnevi","delovni dnevi"),"topright",col = c("blue","red","green"),lty = 1)
 dev.off()
 
-jpeg("slike/prikaz_skupne_povprecne_porabe_za_proste_dni.jpg")
+jpeg("./slike/prikaz_skupne_povprecne_porabe_za_proste_dni.jpg")
 Tabela_prostih_dni <- filter(Tabela_porabe1, Prosti_dan == "TRUE")
 meritev2 <- colMeans(Tabela_prostih_dni[ , 3:98 ],is.na(Tabela_porabe1)== FALSE)
 p2 <-plot(meritev2, type = "o",pch = 20, xlab="čas",ylab = "povprečna poraba",main = "Graf povprečne poraba el. energije za proste dni",xaxt='n')
@@ -50,7 +39,7 @@ xlabels=c("3h","6h","9h","12h","15h","18h","21h","24h")
 axis(side=1, at=c(12,24,36,48,60,72,84,96),labels=xlabels)
 dev.off()
 
-jpeg("slike/prikaz_skupne_povprecne_porabe_za_delovne_dni.jpg")
+jpeg("./slike/prikaz_skupne_povprecne_porabe_za_delovne_dni.jpg")
 Tabela_delovnih_dni <- filter(Tabela_porabe1, Prosti_dan == "FALSE")
 meritev3 <- colMeans(Tabela_delovnih_dni[ , 3:98 ],is.na(Tabela_porabe1)== FALSE)
 p3 <-plot(meritev3, type = "o",pch = 20, xlab="čas",ylab = "povprečna poraba",main = "Graf povprečne poraba el. energije za delavne dni",xaxt='n')
@@ -58,7 +47,7 @@ xlabels=c("3h","6h","9h","12h","15h","18h","21h","24h")
 axis(side=1, at=c(12,24,36,48,60,72,84,96),labels=xlabels)
 dev.off()
 
-jpeg("slike/prikaz_skupne_povprecne_porabe_za_razlicne_dneve.jpg")
+jpeg("./slike/prikaz_skupne_povprecne_porabe_za_razlicne_dneve.jpg")
 par(mar=c(5,6,4,1)+.0001)
 plot(c(0,97),c(0.5,4),main="Povprečna poraba za dneve v tednu",type = "n",pch=20, xlab = "čas", ylab = "povprečna poraba",xaxt='n')
 povpr_poraba_ponedeljek <- colMeans(filter(Tabela_porabe1, Ime_dneva =="Monday")[ ,3:98])
@@ -84,7 +73,7 @@ dev.off()
 # *********************************************** 
 # od tu naprej imam analizo za vremenske podatke
 # **********************************************
-data_vreme2_tidy <- read.table("podatki/zdruzeni_podatki/data_vreme2_tidy.txt",sep=" ")
+data_vreme2_tidy <- read.table("./podatki/zdruzeni_podatki/data_vreme2_tidy.txt",sep=" ")
 datumi <- (data_vreme2_tidy$datum)
 padavine_po_dnevih <- data.frame(rowSums(data_vreme2_tidy[ ,4:51], is.na(data_vreme2_tidy) == FALSE))
 colnames(padavine_po_dnevih) <- c('Kolicina padavin za dan')
@@ -130,14 +119,15 @@ se_model <- ses(povpr_poraba_za_vsak_dan_ts, h = 1)
 summary(se_model)
 naive_mod <- naive(povpr_poraba_za_vsak_dan_ts, h = 1)
 summary(naive_mod, "NA"= 0)
+podatki_napovedni_model = tibble(povpr_poraba_za_vsak_dan_ts, arima_model$fitted, holt_model$fitted, se_model$fitted, naive_mod$fitted)
+write.table(podatki_napovedni_model,"./podatki/zdruzeni_podatki/podatki_napovedni.csv",sep=" ")
 
-
-jpeg("slike/prikaz_natancnosti_razlicnih_napovednih_modelov.jpg")
+jpeg("./slike/prikaz_natancnosti_razlicnih_napovednih_modelov.jpg")
 mar.default <- c(5,2,4,2) + 0.1
 par(mar = mar.default + c(0, 4, 0, 0),family="serif") #axis(side, at=, labels=, pos=, lty=, col=, las=, tck=, ...)
 title="Povprečna poraba in njene  napovedi"
-plot(c(2021,2021.6), c(0,170),yaxt='n',xaxt='n',main=title, type = "n", pch=19,cex.lab=1.2, cex.axis=1.3, cex.main=1.5,xlab = "Čas",ylab = "Povprečna poraba")  # setting up coord. system
-xlabels = c(2021,2021.1, 2021.2, 2021.3, 2021.4, 2021.5, 2021.6)
+plot(c(2021.0, 2021.6), c(0,170),yaxt='n',xaxt='n',main=title, type = "n", pch=19,cex.lab=1.2, cex.axis=1.3, cex.main=1.5,xlab = "Čas",ylab = "Povprečna poraba")  # setting up coord. system
+xlabels = c(2021.0,2021.1, 2021.2, 2021.3, 2021.4, 2021.5, 2021.6)
 ylabels = c(1:10)*17
 axis(side=1,at=xlabels)
 axis(side=2,at=ylabels)
@@ -146,7 +136,7 @@ lines(holt_model$fitted, type = "l", col = "green",lwd=1,cex = 1,pch=16)
 lines(se_model$fitted, type = "l", col = "red",lwd=1,cex = 1,pch=16)
 lines(naive_mod$fitted, type = "l", col = "purple",lwd=1,cex = 1,pch=16)
 lines(povpr_poraba_za_vsak_dan_ts, type = "l", col = "orange",lwd=2,cex = 1,pch=16)
-legend("top", legend=(c("Dejanska poraba","Arima model", "Holt model", "Se model", "Naive mod")), pch=c(16,16),cex=c(1.2,1.2),col=c("orange","blue", "green", "red", "purple"),y.intersp=0.8)
+legend("top", legend=(c("Dejanska poraba","Arima model", "Holt model", "Se model", "Naive mod")), pch=c(16,16,16,16,16),cex=c(1.2,1.2,1.2,1.2, 1.2),col=c("orange","blue", "green", "red", "purple"),y.intersp=0.8)
 dev.off()
 # ***************************************************
 # Grupiranje rezultatov
@@ -237,11 +227,11 @@ diagram.obrisi = function(k.obrisi) {
     ggtitle(paste("Maksimalno povprečje obrisov pri k =", obrisi.k(k.obrisi))) +
     theme_classic()
 }
-jpeg("slike/hirarhicni_model.jpg")
+jpeg("./slike/hirarhicni_model.jpg")
 diagram.obrisi(r.hc)
 dev.off()
 
-jpeg("slike/model_k_tih_voditeljev.jpg")
+jpeg("./slike/model_k_tih_voditeljev.jpg")
 diagram.obrisi(r.km)
 dev.off()
 # ***************************************************
@@ -258,7 +248,7 @@ Tabela_razred1 <- povpr_poraba_matrika1[povpr_poraba_matrika1[,199] == "1",1:198
 Tabela_razred2 <- povpr_poraba_matrika1[povpr_poraba_matrika1[,199] == "2",1:198]
 
 
-jpeg("slike/prikaz_povprecne_porabe_za_razlicne_razrede.jpg")
+jpeg("./slike/prikaz_povprecne_porabe_za_razlicne_razrede.jpg")
 mar.default <- c(5,2,4,2) + 0.1
 par(mar = mar.default + c(0, 4, 0, 0),family="serif") #axis(side, at=, labels=, pos=, lty=, col=, las=, tck=, ...)
 title="Povprečna poraba za različne razrede porabnikov"
@@ -266,8 +256,8 @@ plot(c(0,199), c(0,100),yaxt='n',xaxt='n',main=title, type = "n", pch=19,cex.lab
 xlabels=c(1:19)*10
 axis(side=1,at=xlabels,labels=xlabels)
 axis(side=2,at=c(0:6)*20,labels=as.factor(c(0:6)*20))
-lines(Tabela_razred1, type = "l", col = "black",lwd=2,cex = 1,pch=16)
-lines(colSums(Tabela_razred2), type = "l", col = "red",lwd=2,cex = 1,pch=16)
+lines(colSums(Tabela_razred1), type = "l", col = "black",lwd=2,cex = 1,pch=16)
+lines(Tabela_razred2, type = "l", col = "red",lwd=2,cex = 1,pch=16)
 legend("top", legend=(c("Sk1","Sk2")), pch=c(16,16),cex=c(1,1),col=c("black","red"),y.intersp=1.5,horiz=T)
 dev.off()
 

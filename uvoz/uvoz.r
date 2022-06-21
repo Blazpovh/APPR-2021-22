@@ -22,6 +22,7 @@ for (i in c(1:Ncust)) {
 }
 write.table(data_i_tidy,"podatki/zdruzeni_podatki/data_tidy1.csv",sep=" ")
 
+
 koledar_data <- read_csv("podatki/calendar_2021.csv", na =" ", locale=locale(encoding="Windows-1250"))
 koledar_data_1 <- select(koledar_data, -c(dayHours,dayNum,index))
 koledar_data_1 <-koledar_data[-c(87),]
@@ -31,7 +32,7 @@ Ime_dneva <- rep(dnevni_podatki, times=Ncust)
 datum <- as.character(koledar_data_1$date)
 datumi <- as.character(rep(datumi, times=Ncust))
 prosti_dnevi <- koledar_data_1$freeDay
-prosti_dan <- rep(prosti_dnevi, times=Ncust)
+Prosti_dan <- rep(prosti_dnevi, times=Ncust)
 imena_dni_tabela <- data_frame(datum, dnevni_podatki, prosti_dnevi)
 Tabela_porabe <- read.csv("~/Documents/R_projektna_naloga/APPR-2021-22-Blaz-Povh/podatki/zdruzeni_podatki/data_tidy1.csv", sep="")
 Tabela_porabe1 <- left_join(Tabela_porabe, imena_dni_tabela, by='datum')
@@ -39,6 +40,8 @@ colnames(Tabela_porabe1)[99]<- "Ime_dneva"
 colnames(Tabela_porabe1)[100]<- "Prosti_dan"
 write.table(Tabela_porabe1,"podatki/zdruzeni_podatki/Tabela_porabe.csv",sep=" ")
 
+Tabela_tidy<-Tabela_porabe1 %>% pivot_longer( meritve.1: meritve.96,names_to = "meritev",values_to = "poraba")
+write.table(Tabela_tidy,"podatki/zdruzeni_podatki/Tabela_tidy.csv",sep=" ")
 # ***********************************************************************
 # Uvoz vremenskih podatkov
 # ***********************************************************************
